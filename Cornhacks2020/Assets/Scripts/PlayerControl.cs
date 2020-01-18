@@ -7,13 +7,14 @@ public class PlayerControl : MonoBehaviour
     public float MoveForce;
     public float jumpForce = 10f;
     public float maxSpeed = 10f;
-    public float MaxHealth;
+    public float MaxHealth = 5;
     public float Health;
     public int MaxJumps;
     private Rigidbody2D rb;
     public bool isJumping;
     public float JumpDelay = 0.5f;
     public float distFromGround;
+    public int JumpCount = 0;
 
     private void Awake()
     {
@@ -23,20 +24,21 @@ public class PlayerControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Health = MaxHealth;   
-        
+        Health = MaxHealth;
+        MaxJumps = 3;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        distFromGround = transform.localPosition.y-((float)-4.17);
+        distFromGround = transform.localPosition.y - ((float)-4.17);
 
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
         Move(h, v);
         rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
-       
+
     }
 
     void Move(float h, float v)
@@ -54,9 +56,10 @@ public class PlayerControl : MonoBehaviour
             {
                 transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
             }
-            
-            if (v > 0 && !isJumping)
+
+            if (v > 0 && !isJumping && (JumpCount < MaxJumps))
             {
+                JumpCount++;
                 rb.AddForce(new Vector2(0, jumpForce));
                 StartCoroutine(handleJumping());
             }
@@ -64,6 +67,10 @@ public class PlayerControl : MonoBehaviour
         if (h == 0 && transform.position.y <= -4)
         {
             rb.velocity = new Vector2((float)0.0, rb.velocity.y);
+        }
+        if (v == 0 && rb.velocity.y == 0)
+        {
+            JumpCount = 0;
         }
     }
 
@@ -76,7 +83,11 @@ public class PlayerControl : MonoBehaviour
 
     private bool OnGround()
     {
-        return Physics.Raycast(transform.position,-Vector2.up,distFromGround+(float).1);
+        return Physics.Raycast(transform.position, -Vector2.up, distFromGround + (float).1);
+    }
+    public Vector2 getPosition()
+    {
+        return transform.position;
     }
 
 }
