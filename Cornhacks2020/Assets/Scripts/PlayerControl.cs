@@ -6,6 +6,7 @@ public class PlayerControl : MonoBehaviour
 {
     public float MoveForce;
     public float jumpForce = 10f;
+    public float maxSpeed = 10f;
     public float MaxHealth;
     public float Health;
     public int MaxJumps;
@@ -30,7 +31,7 @@ public class PlayerControl : MonoBehaviour
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
         Move(h, v);
-
+        rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
     }
 
     void Move(float h, float v)
