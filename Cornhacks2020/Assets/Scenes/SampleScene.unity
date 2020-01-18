@@ -1447,6 +1447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb89b65b791cb604ab383de90aec1919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DeathScreen: {fileID: 806339362}
 --- !u!1 &1753019705
 GameObject:
   m_ObjectHideFlags: 0
@@ -1904,6 +1905,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 921419858300468297, guid: bc044b37fd63d574dbda3fe2dc66d92d,
+        type: 3}
+      propertyPath: MaxHealth
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 921419858300468297, guid: bc044b37fd63d574dbda3fe2dc66d92d,
+        type: 3}
+      propertyPath: Health
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 921419858300468298, guid: bc044b37fd63d574dbda3fe2dc66d92d,
         type: 3}
