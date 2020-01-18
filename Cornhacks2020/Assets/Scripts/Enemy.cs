@@ -19,7 +19,11 @@ public class Enemy : MonoBehaviour
 
      void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(collision.gameObject.name);
+        GameObject col = collision.gameObject;
+        if (col.GetComponent<PlayerControl>())
+            if (col.transform.position.y > transform.position.y)
+                Die();
+        
     }
 
     private void Die()
