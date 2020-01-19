@@ -62,9 +62,10 @@ public class Enemy : MonoBehaviour
 
     }
 
-    private void Die()
+    public void Die()
     {
         Destroy(gameObject);
+        GameMaster.Instance().HandleKills();
     }
 
 }
