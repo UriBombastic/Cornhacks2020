@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public Vector3 MoveDirection;
+    public Vector2 MoveDirection;
     public float maxSpeed = 5f;
     private Rigidbody2D rb;
-    public float SpawnTime = 1.5f;
+    public float SpawnTime = 5f;
     public bool canSpawn = true;
     public GameObject enemy;
     // Start is called before the first frame update
