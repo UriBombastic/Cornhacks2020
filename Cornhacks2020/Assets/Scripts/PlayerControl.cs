@@ -95,10 +95,15 @@ public class PlayerControl : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         GameObject col = collision.gameObject;
-        if (col.GetComponent<Enemy>() &&isDamaged == false)
+        if (col.GetComponent<Enemy>() && isDamaged == false)
+        {
             if (col.transform.position.y > transform.position.y)
+            {
                 StartCoroutine(handleDamage());
-        Health--;
+                Health--;
+            }
+        }
+        
 
     }
     private IEnumerator handleDamage()
