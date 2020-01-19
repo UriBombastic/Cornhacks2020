@@ -6,6 +6,7 @@
 [Tt]emp/
 Temp/
 Library/
+*Library*
 Obj/
 Build/
 Logs/
