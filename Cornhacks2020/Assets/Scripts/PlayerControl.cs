@@ -17,6 +17,10 @@ public class PlayerControl : MonoBehaviour
     public float DamageDelay = 2.0f;
     public float distFromGround;
     public int JumpCount = 0;
+    SpriteRenderer sr;
+    public Sprite Sprite1;
+    public Sprite Sprite2;
+    public Sprite Sprite3;
 
     private void Awake()
     {
@@ -28,6 +32,9 @@ public class PlayerControl : MonoBehaviour
     {
         Health = MaxHealth;
         MaxJumps = 3;
+
+
+
     }
 
     // Update is called once per frame
@@ -41,6 +48,15 @@ public class PlayerControl : MonoBehaviour
         rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
         if (Health <= 0)
             Die();
+        if (Health == 2)
+        {
+            sr.sprite = Sprite2;
+        }
+        else if (Health == 1)
+        {
+            sr.sprite = Sprite2;
+
+        }
     }
 
     void Move(float h, float v)
@@ -93,6 +109,9 @@ public class PlayerControl : MonoBehaviour
             if (col.transform.position.y > transform.position.y)
             {
                 StartCoroutine(handleDamage());
+
+                Health--;
+
             }
         }
 

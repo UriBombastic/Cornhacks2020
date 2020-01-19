@@ -155,7 +155,7 @@ Rigidbody2D:
   m_Mass: 0.1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -173,5 +173,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aa21913c65fef441bf57e235ce4bd3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pc: {fileID: 0}
   moveDir: {x: -0.75, y: 0}
-  maxSpeed: 5
+  jumpForce: 10
+  maxSpeed: 1
+  isJumping: 0
+  JumpDelay: 1
+  distFromGround: 0
+  JumpCount: 0
+  MaxJumps: 3
