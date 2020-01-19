@@ -38,7 +38,8 @@ public class PlayerControl : MonoBehaviour
         float v = Input.GetAxis("Vertical");
         Move(h, v);
         rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
-
+        if (Health <= 0)
+            Die();
     }
 
     void Move(float h, float v)
@@ -90,4 +91,9 @@ public class PlayerControl : MonoBehaviour
         return transform.position;
     }
 
+
+    public void Die()
+    {
+        GameMaster.Instance().HandleDeath();
+    }
 }

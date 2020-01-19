@@ -19,8 +19,6 @@ public class Enemy : MonoBehaviour
         GameObject playerGameObject = GameObject.FindWithTag("Player"); 
         //GameObject.FindObjectOfType<PlayerControl>().gameObject;
          pc = playerGameObject.GetComponent<PlayerControl>();
-        if (pc == null)
-        { Debug.Log("Null object"); }
         rb.gravityScale = 1;
 
     }
