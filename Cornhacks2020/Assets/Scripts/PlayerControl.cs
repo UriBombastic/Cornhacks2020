@@ -12,8 +12,11 @@ public class PlayerControl : MonoBehaviour
     public int MaxJumps;
     private Rigidbody2D rb;
     public bool isJumping;
+    public bool isDamaged;
     public float JumpDelay = 0.5f;
+    public float DamageDelay = 2.0f;
     public float distFromGround;
+    public int JumpCount = 0;
 
     private void Awake()
     {
@@ -23,8 +26,8 @@ public class PlayerControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Health = MaxHealth;   
-        
+        Health = MaxHealth;
+        MaxJumps = 3;
     }
 
     // Update is called once per frame
@@ -66,6 +69,10 @@ public class PlayerControl : MonoBehaviour
         {
             rb.velocity = new Vector2((float)0.0, rb.velocity.y);
         }
+        if (v == 0 && rb.velocity.y == 0)
+        {
+            JumpCount = 0;
+        }
     }
 
     private IEnumerator handleJumping()
@@ -74,16 +81,38 @@ public class PlayerControl : MonoBehaviour
         yield return new WaitForSeconds(JumpDelay);
         isJumping = false;
     }
+    public Vector2 getPosition()
+    {
+        return transform.position;
+    }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        GameObject col = collision.gameObject;
+        if (col.GetComponent<Enemy>() && isDamaged == false)
+        {
+            if (col.transform.position.y > transform.position.y)
+            {
+                StartCoroutine(handleDamage());
+            }
+        }
+
+
+    }
+
+    private IEnumerator handleDamage()
+    {
+        isDamaged = true;
+        Health--;
+        yield return new WaitForSeconds(DamageDelay);
+        isDamaged = false;
+    }
+
 
     private bool OnGround()
     {
         return Physics.Raycast(transform.position,-Vector2.up,distFromGround+(float).1);
     }
 
-    public void TakeDamage()
-    {
-        Health--;
-    }
 
     public void Die()
     {
