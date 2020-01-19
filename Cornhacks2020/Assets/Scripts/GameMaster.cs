@@ -24,6 +24,7 @@ public class GameMaster : MonoBehaviour
     public GameObject roundOverScreen;
     public PlatformGenerator platformGen;
     public PlayerControl player;
+    public GameObject FinalBoss;
     // Start is called before the first frame update
     void Start()
     {
@@ -69,7 +70,14 @@ public class GameMaster : MonoBehaviour
         roundOverScreen.SetActive(true);
         yield return new WaitForSeconds(RoundEndTime);
         roundOverScreen.SetActive(false);
-        StartNewRound();
+
+        if(RoundNumber==EnemyKillsRequired.Length)
+            StartNewRound();
+        else
+        {
+            yield return new WaitForSeconds(RoundEndTime);
+            StartFinalRound();
+        }
 
     }
 
@@ -82,4 +90,8 @@ public class GameMaster : MonoBehaviour
 
     }
 
+    public void StartFinalRound()
+    {
+        Instantiate(FinalBoss);
+    }
 }
