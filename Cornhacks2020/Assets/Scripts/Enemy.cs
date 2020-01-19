@@ -80,9 +80,10 @@ public class Enemy : MonoBehaviour
         isJumping = false;
     }
 
-    private void Die()
+    public void Die()
     {
         Destroy(gameObject);
+        GameMaster.Instance().HandleKills();
     }
 
 }

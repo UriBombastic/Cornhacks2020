@@ -10,10 +10,10 @@ public class PlatformGenerator : MonoBehaviour
     public int maxPlatforms;
     void Start()
     {
-        GeneratePlatforms();
+
     }
 
-  void GeneratePlatforms()
+  public void GeneratePlatforms()
     {
         int numPlatforms = Random.Range(minPlatforms, maxPlatforms);
         for(int i = 0; i < numPlatforms; i++)

@@ -15,10 +15,19 @@ public class GameMaster : MonoBehaviour
     }
 
     public GameObject DeathScreen;
+    private int EnemyKills =0;
+    public int[] EnemyKillsRequired;
+    public float[] spawnRates;
+    public int RoundNumber =0;
+    public float RoundEndTime;
+    public EnemySpawner spawner;
+    public GameObject roundOverScreen;
+    public PlatformGenerator platformGen;
+    public PlayerControl player;
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartNewRound();
     }
 
     // Update is called once per frame
@@ -32,4 +41,45 @@ public class GameMaster : MonoBehaviour
         Time.timeScale = 0;
         DeathScreen.SetActive(true);
     }
+
+    public void HandleKills()
+    {
+        EnemyKills++;
+        if (EnemyKills >= EnemyKillsRequired[RoundNumber])
+            EndRound();
+    }
+
+    public void EndRound()
+    {
+        EnemyKills = 0;
+        RoundNumber++;
+        Enemy[] remainingEnemies = FindObjectsOfType<Enemy>();
+        spawner.gameObject.SetActive(false);
+        foreach (Enemy En in remainingEnemies)
+            Destroy(En.gameObject);
+        player.Health = player.MaxHealth;
+        GameObject[] allPlatforms = GameObject.FindGameObjectsWithTag("Platform");
+        foreach (GameObject go in allPlatforms)
+            Destroy(go);
+        StartCoroutine(HandleRoundEndScreen());
+    }
+
+    public IEnumerator HandleRoundEndScreen()
+    {
+        roundOverScreen.SetActive(true);
+        yield return new WaitForSeconds(RoundEndTime);
+        roundOverScreen.SetActive(false);
+        StartNewRound();
+
+    }
+
+    public void StartNewRound()
+    {
+        platformGen.GeneratePlatforms();
+        spawner.gameObject.SetActive(true);
+        spawner.SpawnTime = spawnRates[RoundNumber];
+        spawner.canSpawn = true;
+
+    }
+
 }

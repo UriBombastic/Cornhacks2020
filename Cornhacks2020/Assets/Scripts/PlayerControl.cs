@@ -7,7 +7,7 @@ public class PlayerControl : MonoBehaviour
     public float MoveForce;
     public float jumpForce = 10f;
     public float maxSpeed = 10f;
-    public float MaxHealth = 5;
+    public float MaxHealth;
     public float Health;
     public int MaxJumps;
     private Rigidbody2D rb;
@@ -32,15 +32,15 @@ public class PlayerControl : MonoBehaviour
     {
         Health = MaxHealth;
         MaxJumps = 3;
-        sr = GetComponent<SpriteRenderer>();
-        sr.sprite = Sprite1;
+
+
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        distFromGround = transform.localPosition.y - ((float)-4.17);
+        distFromGround = transform.localPosition.y-((float)-4.17);
 
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
@@ -74,10 +74,9 @@ public class PlayerControl : MonoBehaviour
             {
                 transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
             }
-
-            if (v > 0 && !isJumping && (JumpCount < MaxJumps))
+            
+            if (v > 0 && !isJumping)
             {
-                JumpCount++;
                 rb.AddForce(new Vector2(0, jumpForce));
                 StartCoroutine(handleJumping());
             }
@@ -98,11 +97,6 @@ public class PlayerControl : MonoBehaviour
         yield return new WaitForSeconds(JumpDelay);
         isJumping = false;
     }
-
-    private bool OnGround()
-    {
-        return Physics.Raycast(transform.position, -Vector2.up, distFromGround + (float).1);
-    }
     public Vector2 getPosition()
     {
         return transform.position;
@@ -115,19 +109,29 @@ public class PlayerControl : MonoBehaviour
             if (col.transform.position.y > transform.position.y)
             {
                 StartCoroutine(handleDamage());
+
                 Health--;
-                 
+
             }
         }
-        
+
 
     }
+
     private IEnumerator handleDamage()
     {
         isDamaged = true;
+        Health--;
         yield return new WaitForSeconds(DamageDelay);
         isDamaged = false;
     }
+
+
+    private bool OnGround()
+    {
+        return Physics.Raycast(transform.position,-Vector2.up,distFromGround+(float).1);
+    }
+
 
     public void Die()
     {
