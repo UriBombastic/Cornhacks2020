@@ -80,6 +80,10 @@ public class PlayerControl : MonoBehaviour
         return Physics.Raycast(transform.position,-Vector2.up,distFromGround+(float).1);
     }
 
+    public void TakeDamage()
+    {
+        Health--;
+    }
 
     public void Die()
     {
