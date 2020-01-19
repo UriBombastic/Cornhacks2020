@@ -12,7 +12,9 @@ public class PlayerControl : MonoBehaviour
     public int MaxJumps;
     private Rigidbody2D rb;
     public bool isJumping;
+    public bool isDamaged;
     public float JumpDelay = 0.5f;
+    public float DamageDelay = 2.0f;
     public float distFromGround;
     public int JumpCount = 0;
 
@@ -90,7 +92,21 @@ public class PlayerControl : MonoBehaviour
     {
         return transform.position;
     }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        GameObject col = collision.gameObject;
+        if (col.GetComponent<Enemy>() &&isDamaged == false)
+            if (col.transform.position.y > transform.position.y)
+                StartCoroutine(handleDamage());
+        Health--;
 
+    }
+    private IEnumerator handleDamage()
+    {
+        isDamaged = true;
+        yield return new WaitForSeconds(DamageDelay);
+        isDamaged = false;
+    }
 
     public void Die()
     {
